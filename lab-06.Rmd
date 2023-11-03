@@ -19,7 +19,8 @@ diamonds <- diamonds %>% rename(
     length_mm = x,
     width_mm = y,
     depth_mm = z,
-    table_pct = table
+    table_pct = table,
+    quality = color
   )
 ```
 
@@ -27,11 +28,17 @@ diamonds <- diamonds %>% rename(
 ## Exercise 1
 
 ```{r}
-# Do some preliminary investigations & cleaning
+Diamonds <- diamonds %>% mutate(quality = as.numeric(as.factor(quality)),
+                                clarity = as.numeric(as.factor(clarity)))
 
+# High clarity and low quality is best
 
-
-
+Diamonds %>%
+  summarise(
+    mean_price = mean(price),
+    median_price = median(price)
+  )
+count(Diamonds, price >= mean(price))
 ```
 
 
@@ -39,22 +46,23 @@ diamonds <- diamonds %>% rename(
 
 ```{r}
 
-diamonds <- diamonds %>%
-  mutate(table_mm = table_pct * width_mm / 100)
+Diamonds <- Diamonds %>% 
+  mutate(table_mm = table_pct * width_mm / 100, round(table_mm, digits=2)) %>%
+  select(-table_mm)
 
-# Overall table_mm arithmetic mean?
+Diamonds <- Diamonds %>% rename(
+  table_mm = `round(table_mm, digits = 2)`
+)
 
+View(Diamonds)
 
-
-
-
+summarise(Diamonds, mean_table = mean(length_mm))
 
 # table_mm arithmetic mean within each clarity category
 
-
-
-
-
+#for (i in 1:8){
+ # mean_table_mm[i] <- filter(clarity = i)
+#}
 
 ```
 
