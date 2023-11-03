@@ -60,17 +60,20 @@ summarise(Diamonds, mean_table = mean(length_mm))
 
 # table_mm arithmetic mean within each clarity category
 
-#for (i in 1:8){
- # mean_table_mm[i] <- filter(clarity = i)
-#}
+mean_table_mm = numeric(8)
 
+for (i in 1:8){
+  mean_table_mm[i] <- as.numeric(Diamonds %>% filter(clarity == i) %>% summarise(mean(table_mm)))
+}
+
+Diamonds %>% group_by(clarity) %>% summarise(mean(table_mm))
 ```
 
-_Add your comment here_
+As clarity increases, table length decreases
 
 ## Exercise 3
 
-_Do derivation on paper, unless you know how to write LaTeX code_
+
 
 
 ## Exercise 4

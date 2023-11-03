@@ -412,15 +412,28 @@ summarise(Diamonds, mean_table = mean(length_mm))</code></pre>
 ## 1       5.73</code></pre>
 <pre class="r"><code># table_mm arithmetic mean within each clarity category
 
-#for (i in 1:8){
- # mean_table_mm[i] &lt;- filter(clarity = i)
-#}</code></pre>
-<p><em>Add your comment here</em></p>
+mean_table_mm = numeric(8)
+
+for (i in 1:8){
+  mean_table_mm[i] &lt;- as.numeric(Diamonds %&gt;% filter(clarity == i) %&gt;% summarise(mean(table_mm)))
+}
+
+Diamonds %&gt;% group_by(clarity) %&gt;% summarise(mean(table_mm))</code></pre>
+<pre><code>## # A tibble: 8 × 2
+##   clarity `mean(table_mm)`
+##     &lt;dbl&gt;            &lt;dbl&gt;
+## 1       1             3.91
+## 2       2             3.71
+## 3       3             3.40
+## 4       4             3.25
+## 5       5             3.20
+## 6       6             2.98
+## 7       7             2.83
+## 8       8             2.82</code></pre>
+<p>As clarity increases, table length decreases</p>
 </div>
 <div id="exercise-3" class="section level2">
 <h2>Exercise 3</h2>
-<p><em>Do derivation on paper, unless you know how to write LaTeX
-code</em></p>
 </div>
 <div id="exercise-4" class="section level2">
 <h2>Exercise 4</h2>
